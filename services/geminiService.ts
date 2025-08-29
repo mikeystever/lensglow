@@ -97,7 +97,7 @@ Output: Return ONLY the final edited image. Do not return text.`;
     console.log('Sending image and prompt to the model...');
     const response: GenerateContentResponse = await ai.models.generateContent({
         model: 'gemini-2.5-flash-image-preview',
-        contents: { parts: [originalImagePart, textPart] },
+        contents: [{ parts: [originalImagePart, textPart] }],
         config: {
             responseModalities: [Modality.IMAGE, Modality.TEXT],
         },
@@ -134,7 +134,7 @@ Output: Return ONLY the final filtered image. Do not return text.`;
     console.log('Sending image and filter prompt to the model...');
     const response: GenerateContentResponse = await ai.models.generateContent({
         model: 'gemini-2.5-flash-image-preview',
-        contents: { parts: [originalImagePart, textPart] },
+        contents: [{ parts: [originalImagePart, textPart] }],
         config: {
             responseModalities: [Modality.IMAGE, Modality.TEXT],
         },
@@ -174,12 +174,16 @@ Output: Return ONLY the final adjusted image. Do not return text.`;
 
     console.log('Sending image and adjustment prompt to the model...');
     const response: GenerateContentResponse = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-image-preview',
-        contents: { parts: [originalImagePart, textPart] },
-        config: {
-            responseModalities: [Modality.IMAGE, Modality.TEXT],
-        },
-    });
+    model: 'gemini-2.5-flash-image-preview',
+    contents: [
+        {
+            parts: [originalImagePart, textPart]
+        }
+    ],
+    config: {
+        responseModalities: [Modality.IMAGE, Modality.TEXT],
+    },
+});
     console.log('Received response from model for adjustment.', response);
     
     return handleApiResponse(response, 'adjustment');
